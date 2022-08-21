@@ -1,50 +1,49 @@
-# AWS Provider
-
-variable "aws_profile" {
-  description = "AWS profile that will be used to create the infrastructure."
+# AZ Resource Group
+variable "resource_group" {
+  description = "AZ resource group."
   type        = string
-  default     = "default"
+  default     = "tfm-jruedas-rg"
 }
 
-variable "aws_region" {
-  description = "AWS region where the infrastructure will be created."
+variable "location" {
+  description = "AZ resource group."
   type        = string
-  default     = "us-east-1"
+  default     = "East US"
 }
 
-# EKS
+# AKS
 variable "cluster_name" {
-  description = "EKS cluster name."
+  description = "AKS cluster name."
   type        = string
-  default     = "tfm-eks"
+  default     = "tfm-jruedas-aks"
 }
 
-variable "cluster_version" {
-  description = "EKS cluster version."
+variable "node_pool_name" {
+  description = "AKS node pool name."
   type        = string
-  default     = "1.22"
-}
-
-variable "instance_type" {
-  description = "EKS instance types."
-  type        = string
-  default     = "t2.micro"
+  default     = "tfmjruedasnp"
 }
 
 variable "cluster_size" {
-  description = "EKS cluster size."
+  description = "AKS cluster size."
   type        = number
   default     = 2
 }
 
-variable "userarn" {
-  description = "User arn."
+variable "instance_type" {
+  description = "AKS instance types."
   type        = string
-  default     = "arn:aws:iam::66666666666:user/user1"
+  default     = "Standard_B2s"
 }
 
-variable "username" {
-  description = "User name."
+variable "dns_prefix" {
+  description = "AKS DNS prefix."
   type        = string
-  default     = "jruedas"
+  default     = "tmf-jruedas"
+}
+
+variable "kubernetes_version" {
+  description = "AKS Kubernetes version."
+  type        = string
+  default     = "1.22"
 }

@@ -1,4 +1,4 @@
-provider "aws" {
-  profile = var.aws_profile
-  region  = var.aws_region
+provider "azurerm" {
+  # Configuration options. Not required, login using CLI.
+  features {}
 }
