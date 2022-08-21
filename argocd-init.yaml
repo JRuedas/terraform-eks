@@ -1,0 +1,29 @@
+server:
+  extraArgs:
+   - --insecure
+  service:
+    type: LoadBalancer
+  additionalApplications:
+   - name: JRuedas-TFM-Podinfo
+     project: default
+     namespace: argocd
+     source:
+       repoURL: https://github.com/JRuedas/podinfo
+       targetRevision: HEAD
+       path: charts/podinfo
+       directory:
+         recurse: true
+       parameters:
+        - name: ingress.enabled
+          value: true
+     destination:
+       server: https://kubernetes.default.svc               
+       namespace: jruedas-podinfo-dev
+     syncPolicy:
+       automated:
+         prune: true
+         selfHeal: true
+       syncOptions:
+        - ApplyOutOfSyncOnly=true
+        - CreateNamespace=true
+        - PrunePropagationPolicy=background

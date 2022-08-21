@@ -47,3 +47,9 @@ variable "kubernetes_version" {
   type        = string
   default     = "1.22"
 }
+
+variable "kubeconfig_name" {
+  description = "AKS Kubeconfig name."
+  type        = string
+  default     = "aks-tfm"
+}

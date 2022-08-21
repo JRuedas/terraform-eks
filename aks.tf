@@ -23,13 +23,8 @@ resource "azurerm_kubernetes_cluster" "jruedas-aks" {
   }
 }
 
-output "client_certificate" {
-
-  value     = azurerm_kubernetes_cluster.jruedas-aks.kube_config.0.client_certificate
-  sensitive = true
-}
-
-output "kube_config" {
-  value     = azurerm_kubernetes_cluster.jruedas-aks.kube_config_raw
-  sensitive = true
+resource "local_file" "kubeconfig" {
+  filename        = "~/.kube/${var.kubeconfig_name}.kubeconfig"
+  file_permission = "600"
+  content         = azurerm_kubernetes_cluster.jruedas-aks.kube_config_raw
 }
