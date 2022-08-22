@@ -16,11 +16,7 @@ resource "azurerm_kubernetes_cluster" "jruedas-aks" {
     type = "SystemAssigned"
   }
 
-  tags = {
-    Author      = "Jonatan Ruedas"
-    Environment = "TFM"
-    ManagedBy   = "Terraform"
-  }
+  tags = var.tags
 }
 
 resource "local_file" "kubeconfig" {

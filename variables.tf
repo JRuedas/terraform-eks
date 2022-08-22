@@ -53,3 +53,13 @@ variable "kubeconfig_name" {
   type        = string
   default     = "aks-tfm"
 }
+
+variable "tags" {
+  description = "Tags to apply to resources"
+  type        = map(string)
+  default = {
+    Owner       = "JRuedas"
+    Environment = "TFM"
+    ManagedBy   = "Terraform"
+  }
+}

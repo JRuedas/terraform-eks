@@ -4,7 +4,7 @@ resource "helm_release" "nginx" {
   chart      = "nginx/ingress-nginx"
   version    = "4.2.1"
 
-  namespace  = "ingress-nginx"
+  namespace        = "ingress-nginx"
   create_namespace = true
 }
 
@@ -13,8 +13,8 @@ resource "helm_release" "argocd" {
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd/argo-cd"
   version    = "4.10.8"
-  
-  namespace  = "argocd"
+
+  namespace        = "argocd"
   create_namespace = true
 
   values = [
