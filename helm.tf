@@ -1,7 +1,7 @@
 resource "helm_release" "nginx" {
   name       = "tfm-ingress-nginx"
   repository = "https://kubernetes.github.io/ingress-nginx"
-  chart      = "nginx/ingress-nginx"
+  chart      = "ingress-nginx"
   version    = "4.2.1"
 
   namespace        = "ingress-nginx"
@@ -11,7 +11,7 @@ resource "helm_release" "nginx" {
 resource "helm_release" "argocd" {
   name       = "tfm-argocd"
   repository = "https://argoproj.github.io/argo-helm"
-  chart      = "argo-cd/argo-cd"
+  chart      = "argo-cd"
   version    = "4.10.8"
 
   namespace        = "argocd"

@@ -20,7 +20,7 @@ resource "azurerm_kubernetes_cluster" "jruedas-aks" {
 }
 
 resource "local_file" "kubeconfig" {
-  filename        = "~/.kube/${var.kubeconfig_name}.kubeconfig"
+  filename        = pathexpand("~/.kube/${var.kubeconfig_name}.kubeconfig")
   file_permission = "600"
   content         = azurerm_kubernetes_cluster.jruedas-aks.kube_config_raw
 }

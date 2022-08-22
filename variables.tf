@@ -63,3 +63,9 @@ variable "tags" {
     ManagedBy   = "Terraform"
   }
 }
+
+variable "my_domain_name" {
+  description = "My domain name."
+  type        = string
+  default     = "jruedas.dev"
+}
