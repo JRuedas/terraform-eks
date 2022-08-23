@@ -26,6 +26,25 @@ resource "helm_release" "external-dns" {
   ]
 }
 
+resource "helm_release" "cert-manager" {
+  name       = "tfm-cert-manager"
+  repository = "https://charts.jetstack.io"
+  chart      = "cert-manager"
+  version    = "v1.9.1"
+
+  namespace        = "cert-manager"
+  create_namespace = true
+
+  set {
+    name  = "installCRDs"
+    value = "true"
+  }
+
+  depends_on = [
+    helm_release.nginx
+  ]
+}
+
 resource "helm_release" "argocd" {
   name       = "tfm-argocd"
   repository = "https://argoproj.github.io/argo-helm"
