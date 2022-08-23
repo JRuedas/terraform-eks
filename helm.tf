@@ -8,6 +8,24 @@ resource "helm_release" "nginx" {
   create_namespace = true
 }
 
+resource "helm_release" "external-dns" {
+  name       = "tfm-external-dns"
+  repository = "https://kubernetes-sigs.github.io/external-dns/"
+  chart      = "external-dns"
+  version    = "1.11.0"
+
+  values = [
+    "${file("external-dns-values.yaml")}"
+  ]
+
+  namespace        = "external-dns"
+  create_namespace = true
+
+  depends_on = [
+    helm_release.nginx
+  ]
+}
+
 resource "helm_release" "argocd" {
   name       = "tfm-argocd"
   repository = "https://argoproj.github.io/argo-helm"
@@ -18,7 +36,7 @@ resource "helm_release" "argocd" {
   create_namespace = true
 
   values = [
-    "${file("argocd-init.yaml")}"
+    "${file("argocd-values.yaml")}"
   ]
 
   depends_on = [
