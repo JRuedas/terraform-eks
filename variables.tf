@@ -69,3 +69,9 @@ variable "my_domain_name" {
   type        = string
   default     = "jruedas.dev"
 }
+
+variable "my_mail" {
+  description = "My domain name."
+  type        = string
+  default     = "jonatan.ruedas050@comunidadunir.net"
+}

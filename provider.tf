@@ -19,3 +19,9 @@ provider "helm" {
     config_path = local_file.kubeconfig.filename
   }
 }
+
+provider "kubectl" {
+  # HACK: required to instruct terraform to wait until the kubeconfig is properly placed
+  config_path    = local_file.kubeconfig.filename
+  config_context = var.cluster_name
+}
