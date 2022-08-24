@@ -17,10 +17,16 @@ resource "azurerm_role_assignment" "jruedas-dns-ra" {
 
 data "azurerm_subscription" "current" {}
 
+resource "kubernetes_namespace" "external_dns_namespace" {
+  metadata {
+    name = "external-dns"
+  }
+}
+
 resource "kubernetes_secret" "external_dns_secret" {
   metadata {
     name      = "azure-config-file"
-    namespace = "external-dns"
+    namespace = kubernetes_namespace.external_dns_namespace.metadata[0].name
   }
 
   data = {

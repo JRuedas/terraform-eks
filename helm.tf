@@ -15,14 +15,14 @@ resource "helm_release" "external-dns" {
   version    = "1.11.0"
 
   values = [
-    "${file("external-dns-values.yaml")}"
+    "${file("chart_values/external-dns-values.yaml")}"
   ]
 
   namespace        = "external-dns"
   create_namespace = true
 
   depends_on = [
-    helm_release.nginx
+    kubernetes_secret.external_dns_secret
   ]
 }
 
@@ -39,10 +39,6 @@ resource "helm_release" "cert-manager" {
     name  = "installCRDs"
     value = "true"
   }
-
-  depends_on = [
-    helm_release.nginx
-  ]
 }
 
 resource "helm_release" "argocd" {
@@ -55,10 +51,12 @@ resource "helm_release" "argocd" {
   create_namespace = true
 
   values = [
-    "${file("argocd-values.yaml")}"
+    "${file("chart_values/argocd-values.yaml")}"
   ]
 
   depends_on = [
-    helm_release.nginx
+    helm_release.nginx,
+    helm_release.external-dns,
+    helm_release.cert-manager
   ]
 }
