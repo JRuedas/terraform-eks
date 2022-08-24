@@ -1,8 +1,9 @@
 module "cert-manager" {
-  source  = "terraform-iaac/cert-manager/kubernetes"
-  version = "2.4.2"
+  source        = "terraform-iaac/cert-manager/kubernetes"
+  version       = "2.4.2"
+  chart_version = "v1.9.1"
 
-  chart_version    = "v1.9.1"
+  namespace_name   = var.cert_manager_namespace
   create_namespace = true
 
   additional_set = [{
@@ -18,13 +19,13 @@ module "cert-manager" {
   solvers = [{
     dns01 = {
       azureDNS = {
-        environment    = "AzurePublicCloud"
-        hostedZoneName = var.my_domain_name
+        environment       = "AzurePublicCloud"
+        hostedZoneName    = var.my_domain_name
+        resourceGroupName = azurerm_resource_group.az_rsg.name
+        subscriptionID    = data.azurerm_subscription.current.subscription_id
         managedIdentity = {
           clientID = azurerm_kubernetes_cluster.jruedas-aks.kubelet_identity[0].client_id
         }
-        resourceGroupName = azurerm_resource_group.az_rsg.name
-        subscriptionID    = data.azurerm_subscription.current.subscription_id
       }
     }
   }]

@@ -5,7 +5,7 @@ resource "azurerm_dns_zone" "jruedas_zone" {
 }
 
 resource "local_file" "nameservers_file" {
-  filename = "nameservers.txt"
+  filename = var.nameservers_name
   content  = join("\n", azurerm_dns_zone.jruedas_zone.name_servers)
 }
 
@@ -19,7 +19,7 @@ data "azurerm_subscription" "current" {}
 
 resource "kubernetes_namespace" "external_dns_namespace" {
   metadata {
-    name = "external-dns"
+    name = var.external_dns_namespace
   }
 }
 

@@ -4,8 +4,10 @@ resource "helm_release" "nginx" {
   chart      = "ingress-nginx"
   version    = "4.2.1"
 
-  namespace        = "ingress-nginx"
+  namespace        = var.ingress_nginx_namespace
   create_namespace = true
+  atomic           = true
+  cleanup_on_fail  = true
 }
 
 resource "helm_release" "external-dns" {
@@ -18,8 +20,10 @@ resource "helm_release" "external-dns" {
     "${file("chart_values/external-dns-values.yaml")}"
   ]
 
-  namespace        = "external-dns"
+  namespace        = var.external_dns_namespace
   create_namespace = true
+  atomic           = true
+  cleanup_on_fail  = true
 
   depends_on = [
     kubernetes_secret.external_dns_secret
@@ -32,8 +36,10 @@ resource "helm_release" "argocd" {
   chart      = "argo-cd"
   version    = "4.10.8"
 
-  namespace        = "argocd"
+  namespace        = var.argocd_namespace
   create_namespace = true
+  atomic           = true
+  cleanup_on_fail  = true
 
   values = [
     "${file("chart_values/argocd-values.yaml")}"

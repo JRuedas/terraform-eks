@@ -64,14 +64,48 @@ variable "tags" {
   }
 }
 
+# DNS
 variable "my_domain_name" {
   description = "My domain name."
   type        = string
   default     = "jruedas.dev"
 }
 
+# Cert manager
+variable "nameservers_name" {
+  description = "File with AZ nameservers."
+  type        = string
+  default     = "nameservers.txt"
+}
+
 variable "my_mail" {
   description = "My domain name."
   type        = string
   default     = "jonatan.ruedas050@comunidadunir.net"
+}
+
+# Helm charts
+
+variable "ingress_nginx_namespace" {
+  description = "Namespace for ingress Nginx components."
+  type        = string
+  default     = "ingress-nginx"
+}
+
+variable "external_dns_namespace" {
+  description = "Namespace for external dns components."
+  type        = string
+  default     = "external-dns"
+}
+
+variable "cert_manager_namespace" {
+  description = "Namespace for cert manager components."
+  type        = string
+  default     = "cert-manager"
+}
+
+variable "argocd_namespace" {
+  description = "Namespace for argocd components."
+  type        = string
+  default     = "argocd"
 }
