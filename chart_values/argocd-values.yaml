@@ -13,6 +13,20 @@ server:
         parameters:
         - name: ingress.enabled
           value: "true"
+        - name: ingress.hosts[0].host
+          value: podinfo.jruedas.dev
+        - name: ingress.hosts[0].paths[0].pathType
+          value: Prefix
+        - name: ingress.tls[0].secretName
+          value: jruedas-podinfo-tls
+        - name: ingress.tls[0].hosts[0]
+          value: podinfo.jruedas.dev
+        - name: ingress.className
+          value: nginx
+        values: |-
+          ingress:
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
      destination:
        server: https://kubernetes.default.svc               
        namespace: jruedas-podinfo-dev
