@@ -1,40 +1,18 @@
-resource "azurerm_dns_zone" "jruedas_zone" {
+data "azurerm_subscription" "jruedas_as" {}
+
+resource "azurerm_dns_zone" "jruedas_dns_zone" {
   name                = var.my_domain_name
-  resource_group_name = azurerm_resource_group.az_rsg.name
+  resource_group_name = azurerm_resource_group.jruedas_rsg.name
   tags                = var.tags
 }
 
 resource "local_file" "nameservers_file" {
   filename = var.nameservers_name
-  content  = join("\n", azurerm_dns_zone.jruedas_zone.name_servers)
+  content  = join("\n", azurerm_dns_zone.jruedas_dns_zone.name_servers)
 }
 
-resource "azurerm_role_assignment" "jruedas-dns-ra" {
-  principal_id         = azurerm_kubernetes_cluster.jruedas-aks.kubelet_identity[0].object_id
-  scope                = azurerm_dns_zone.jruedas_zone.id
+resource "azurerm_role_assignment" "jruedas_dns_ra" {
+  principal_id         = azurerm_kubernetes_cluster.jruedas_aks.kubelet_identity[0].object_id
+  scope                = azurerm_dns_zone.jruedas_dns_zone.id
   role_definition_name = "DNS Zone Contributor"
-}
-
-data "azurerm_subscription" "current" {}
-
-resource "kubernetes_namespace" "external_dns_namespace" {
-  metadata {
-    name = var.external_dns_namespace
-  }
-}
-
-resource "kubernetes_secret" "external_dns_secret" {
-  metadata {
-    name      = "azure-config-file"
-    namespace = kubernetes_namespace.external_dns_namespace.metadata[0].name
-  }
-
-  data = {
-    "azure.json" = jsonencode({
-      "tenantId"                    = "${data.azurerm_subscription.current.tenant_id}",
-      "subscriptionId"              = "${data.azurerm_subscription.current.subscription_id}",
-      "resourceGroup"               = "${azurerm_resource_group.az_rsg.name}",
-      "useManagedIdentityExtension" = true
-    })
-  }
 }

@@ -2,46 +2,26 @@ server:
   extraArgs:
     - --insecure
   additionalApplications:
-    - name: jruedas-tfm-podinfo
-      project: default
+    - name: root-app
       namespace: argocd
+      project: default
       source:
-        repoURL: https://github.com/JRuedas/podinfo
+        path: applications/
+        repoURL: https://github.com/JRuedas/tfm-argocd-apps.git
         targetRevision: HEAD
-        path: charts/podinfo
-        helm:
-          parameters:
-            - name: ingress.enabled
-              value: "true"
-            - name: ingress.hosts[0].host
-              value: podinfo.jruedas.dev
-            - name: ingress.hosts[0].paths[0].pathType
-              value: Prefix
-            - name: ingress.hosts[0].paths[0].path
-              value: /
-            - name: ingress.tls[0].secretName
-              value: jruedas-podinfo-tls
-            - name: ingress.tls[0].hosts[0]
-              value: podinfo.jruedas.dev
-            - name: ingress.className
-              value: nginx
-          values: |-
-            ingress:
-              annotations:
-                cert-manager.io/cluster-issuer: letsencrypt-prod
       destination:
-        server: https://kubernetes.default.svc               
-        namespace: jruedas-podinfo-dev
+        server: https://kubernetes.default.svc
+        namespace: root-app
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
         syncOptions:
-          - ApplyOutOfSyncOnly=true
           - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
           - PrunePropagationPolicy=background
         retry:
-          limit: 3
+          limit: 4
           backoff:
             duration: 5s
             factor: 2

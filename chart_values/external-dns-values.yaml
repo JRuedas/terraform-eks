@@ -1,6 +1,0 @@
-domainFilters: [ jruedas.dev ]
-provider: azure
-txtPrefix: externaldns-
-extraArgs: [ --azure-resource-group=tfm-jruedas-rg ]
-extraVolumes: [ { "name" : "azure-config-file", "secret" : { "secretName" : "azure-config-file" } } ]
-extraVolumeMounts: [ { "name" : "azure-config-file", "mountPath" : "/etc/kubernetes", "readOnly": true } ]

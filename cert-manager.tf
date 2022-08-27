@@ -21,10 +21,10 @@ module "cert-manager" {
       azureDNS = {
         environment       = "AzurePublicCloud"
         hostedZoneName    = var.my_domain_name
-        resourceGroupName = azurerm_resource_group.az_rsg.name
-        subscriptionID    = data.azurerm_subscription.current.subscription_id
+        resourceGroupName = azurerm_resource_group.jruedas_rsg.name
+        subscriptionID    = data.azurerm_subscription.jruedas_as.subscription_id
         managedIdentity = {
-          clientID = azurerm_kubernetes_cluster.jruedas-aks.kubelet_identity[0].client_id
+          clientID = azurerm_kubernetes_cluster.jruedas_aks.kubelet_identity[0].client_id
         }
       }
     }

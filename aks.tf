@@ -1,7 +1,7 @@
-resource "azurerm_kubernetes_cluster" "jruedas-aks" {
+resource "azurerm_kubernetes_cluster" "jruedas_aks" {
   name                = var.cluster_name
-  location            = azurerm_resource_group.az_rsg.location
-  resource_group_name = azurerm_resource_group.az_rsg.name
+  location            = azurerm_resource_group.jruedas_rsg.location
+  resource_group_name = azurerm_resource_group.jruedas_rsg.name
   dns_prefix          = var.dns_prefix
 
   default_node_pool {
@@ -19,8 +19,8 @@ resource "azurerm_kubernetes_cluster" "jruedas-aks" {
   tags = var.tags
 }
 
-resource "local_file" "kubeconfig" {
+resource "local_file" "jruedas_kubeconfig" {
   filename        = pathexpand("~/.kube/${var.kubeconfig_name}.kubeconfig")
   file_permission = "600"
-  content         = azurerm_kubernetes_cluster.jruedas-aks.kube_config_raw
+  content         = azurerm_kubernetes_cluster.jruedas_aks.kube_config_raw
 }

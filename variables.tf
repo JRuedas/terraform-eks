@@ -84,19 +84,53 @@ variable "my_mail" {
   default     = "jonatan.ruedas050@comunidadunir.net"
 }
 
+# Azure key vault
+variable "key_vault_name" {
+  description = "Azure key vault name."
+  type        = string
+  default     = "jruedas-tfm-vault"
+}
+
+variable "key_vault_admin_key_permissions" {
+  description = "List of Azure key vault key permissions"
+  type        = list(string)
+  default = ["Get", "List", "Update", "Create", "Import", "Delete", "Recover", "Backup", "Restore",
+  "Rotate", "GetRotationPolicy", "SetRotationPolicy"]
+}
+
+variable "key_vault_admin_secret_permissions" {
+  description = "List of Azure key vault secret permissions"
+  type        = list(string)
+  default     = ["Get", "List", "Set", "Delete", "Recover", "Backup", "Restore", "Purge"]
+}
+
+variable "key_vault_admin_certificate_permissions" {
+  description = "List of Azure key vault certificate permissions"
+  type        = list(string)
+  default = ["Backup", "Create", "Delete", "DeleteIssuers", "Get", "GetIssuers", "Import", "List",
+  "ListIssuers", "ManageContacts", "ManageIssuers", "Recover", "Restore", "SetIssuers", "Update"]
+}
+
+variable "key_vault_admin_storage_permissions" {
+  description = "List of Azure key vault storage permissions"
+  type        = list(string)
+  default = ["Backup", "Delete", "DeleteSAS", "Get", "GetSAS", "List", "ListSAS", "Purge", "Recover",
+  "RegenerateKey", "Restore", "Set", "SetSAS", "Update"]
+}
+
+variable "external_dns_secret_name" {
+  description = "Azure key vault external dns secret name."
+  type        = string
+  default     = "external-dns-secret"
+}
+
+variable "cert_manager_secret_name" {
+  description = "Azure key vault cert manager secret name."
+  type        = string
+  default     = "cert-manager-secret"
+}
+
 # Helm charts
-
-variable "ingress_nginx_namespace" {
-  description = "Namespace for ingress Nginx components."
-  type        = string
-  default     = "ingress-nginx"
-}
-
-variable "external_dns_namespace" {
-  description = "Namespace for external dns components."
-  type        = string
-  default     = "external-dns"
-}
 
 variable "cert_manager_namespace" {
   description = "Namespace for cert manager components."
