@@ -9,9 +9,10 @@ applicationSet:
 server:
   ingress:
     enabled: true
-    ingressClassName: "nginx"
+    ingressClassName: nginx
     annotations:
-      "cert-manager.io/cluster-issuer": "letsencrypt-prod"
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+      nginx.ingress.kubernetes.io/backend-protocol: HTTPS
     hosts:
       - argocd.jruedas.dev
     https: true
