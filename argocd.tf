@@ -12,4 +12,8 @@ resource "helm_release" "argocd" {
   values = [
     "${file("chart_values/argocd-values.yaml")}"
   ]
+
+  depends_on = [
+    module.cert-manager
+  ]
 }
