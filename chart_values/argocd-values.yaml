@@ -2,8 +2,6 @@ dex:
   enabled: false
 notifications:
   enabled: false
-redis:
-  enabled: false
 applicationSet:
   enabled: false
 server:
